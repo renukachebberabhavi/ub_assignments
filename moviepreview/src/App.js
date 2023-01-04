@@ -4,16 +4,6 @@ import Mvheader from './components/Mvheader';
 import MvPreview from './components/Mvpreview';
 
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <p>hello</p>
-//       </header>
-//     </div>
-//   );
-// }
-
 function App() {
   const comedyFilms= [
     {
@@ -74,10 +64,10 @@ function App() {
       rating:"3*"
     }
   ]
-  
+console.log("in app")
   return(
       <div class="App">
-      <h1>Movie preview page </h1>
+      <h1>Movie preview page</h1>
       <Mvheader heading="All time Comedy Movies"></Mvheader>
       <div class="Previewcontainer">  
       {comedyFilms.map(i => <MvPreview title = {i.title} rating = {i.rating} thumbnail = {i.thumbnail}></MvPreview>)} 

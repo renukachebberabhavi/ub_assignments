@@ -2,14 +2,15 @@ import './Mvpreview.css'
 
 function MvPreview(props) {
       let card_id = document.querySelector(".card");
-    // // // // let card_id = document.querySelector(".Previewcontainer");
-    card_id.addEventListener("mouseout", (e) => {
-        card_id.style.border = "none"
-     })
-     card_id.addEventListener("mouseover", (e) => {
-         card_id.style.border = "2px solid black"
-        //  console.log("Still building this page")
-     })
+    // // // // let card_id = document.querySelector(".Previewcontainer");ls
+    
+    // card_id.addEventListener("mouseout", (e) => {
+    //     card_id.style.border = "none"
+    //  })
+    //  card_id.addEventListener("mouseover", (e) => {
+    //      card_id.style.border = "2px solid black"
+    //     //  console.log("Still building this page")
+    //  })
 
     return (
         <>
