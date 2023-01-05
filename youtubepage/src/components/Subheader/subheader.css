@@ -1,0 +1,17 @@
+.subheader {
+    display: flex;
+    align-items: center;
+}
+
+.subheader>div {
+    margin-left: 15px;
+    /* font-weight: bold; */
+    /* color: white; */
+    color: black;
+    background-color: lightgray;
+    border: 1px solid grey;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}

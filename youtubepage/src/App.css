@@ -1,0 +1,23 @@
+html,body,#root{
+  height:100%;
+  width:100%;
+  margin:0;
+  padding:0;
+  background-color:lightgray;
+}
+
+*{
+  /* box-sizing:border-box; */
+}
+.youtube-list-complete-container{
+
+  height: 90%;
+    width: 100%;
+    display: flex;
+    padding-left: 20px;
+    /* align-items: center; */
+    /* padding: 5px;
+    padding-top: 5px;
+    padding-left: 15px; */
+    background-color: white;
+}
