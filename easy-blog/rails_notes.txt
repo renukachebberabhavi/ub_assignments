@@ -1,0 +1,38 @@
+Install rails:
+	gem install rails
+//The above command can be run from any folder,it takes some time to install this
+
+Create sample project:
+	rails new easy-blog
+
+Execute rails app:
+	go to proj folder(easy-blog here)
+	rails s //runs on default port 3000,if react and ruby runs together its better to change port number here
+	rails s -p 3001
+	Note: if no port is specified then it will run at 3000 port which is default.
+	Note1:Browser don't show it bydefault, we need to open the link
+
+Create hello world routes:
+	1. Go to config/routes.rb
+		root "application#hello"
+	2. Go to app/controllers/application_controller.rb
+		Add a function called as hello inside the application controller class
+			def hello
+				render html: 'hello World'
+			end
+
+Create new controller and pages:
+	rails generate controller pages
+	Note1:creates app/controllers/pages_controller.rb
+	Note2:Also creates app/views/pages
+
+To link css with erb:
+	 <%= stylesheet_link_tag "index" %> inside .erb file in <head> tag.
+
+scaffolding:
+	rails generate scaffold Article title:string description:string
+	rails db:migrate //It creates table
+
+	Note:Not recomended now, but for quick creation we can use
+
+
