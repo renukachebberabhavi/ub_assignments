@@ -1,0 +1,317 @@
+Create new project:
+	rails new userreg
+
+Execute rails app:
+	go to proj folder
+	rails s //runs on default port 3000,if react and ruby runs together its better to change port number here
+	rails s -p 3001
+
+Create controller:
+	rails generate controller blog
+
+info required for blogArticle:
+
+title: string //should not be more than 80 chars
+blog: string //should not be more than 5000 characters
+imagelink: string
+
+
+For Updating the Model:
+	1. Create a Migration file
+		rails generate migration create_blog
+
+	Note:now under models,blog.rb write a class Blog inheriting ApplicationRecord ORM
+		blog.rb
+		class Blog < ApplicationRecord
+		end
+
+		rails generate migration blog_links
+	Note: Don't use create_links or anything with create unless you want to create something.
+	2. Edit the migration file
+		create_table :
+			t.string :title
+
+		def change
+			add_column :blog, :blog, :string
+    			add_column :blog, :imagelink, :string
+			
+		end
+	3. Run the migrate command
+		rails db:migrate
+
+
+from cmd prompt:
+
+PS D:\YUBI\rails\userreg> rails generate migration create_blog
+      invoke  active_record
+      create    db/migrate/20230111173302_create_blog.rb
+PS D:\YUBI\rails\userreg> rails db:migrate
+== 20230111173302 CreateBlog: migrating =======================================
+-- create_table(:blogs)
+   -> 0.0076s
+== 20230111173302 CreateBlog: migrated (0.0087s) ==============================
+
+interpreter usage:
+PS D:\YUBI\rails\userreg> rails c
+###########################################################################3
+for creating record from interpreter:
+Blog.create(title: "Health Blog")
+cmdline output for the same:
+irb(main):002:0> Blog.create(title: "Health Blog")
+  		TRANSACTION (0.1ms)  begin transaction
+ Blog Create (2.0ms)  INSERT INTO "blogs" ("title", "created_at", "updated_at") VALUES (?, ?, ?)  [["title", "Health Blog"], ["created_at", "2023-01-11 17:52:26.361673"], ["updated_at", "2023-01-11 17:52:26.361673"]]
+  		TRANSACTION (155.5ms)  commit transaction
+=> 
+#<Blog:0x00000233c40fdcb0
+ id: 1,
+ title: "Health Blog",
+ created_at: Wed, 11 Jan 2023 17:52:26.361673000 UTC +00:00,
+ updated_at: Wed, 11 Jan 2023 17:52:26.361673000 UTC +00:00>
+irb(main):003:0> Blog.all
+  Blog Load (0.9ms)  SELECT "blogs".* FROM "blogs"
+=>
+#################created one more using create##########################
+[#<Blog:0x00000233c266e250
+  id: 1,
+  title: "Health Blog",
+  created_at: Wed, 11 Jan 2023 17:52:26.361673000 UTC +00:00,
+  updated_at: Wed, 11 Jan 2023 17:52:26.361673000 UTC +00:00>,
+ #<Blog:0x00000233c266e110
+  id: 2,
+  title: "Historical places",
+  created_at: Wed, 11 Jan 2023 17:58:45.027127000 UTC +00:00,
+  updated_at: Wed, 11 Jan 2023 17:58:45.027127000 UTC +00:00>]
+irb(main):006:0>
+###########################################################################################3
+Creating record through instance from command line interpreter:
+		create new instance it via new(p=Blog.new) ,
+		update (p.title = "123") 
+		save it(p.save) 
+		view it(Blog.all)
+
+irb(main):006:0>irb(main):006:0> p= Blog.new
+=> #<Blog:0x00000233c2665650 id: nil, title: nil, created_at: nil, updated_at: nil>
+irb(main):007:0> p
+
+irb(main):007:0> p.title = "Nearby hotels"
+=> "Nearby hotels"
+irb(main):008:0> p
+
+irb(main):008:0> p.save
+  TRANSACTION (0.1ms)  begin transaction
+  Blog Create (3.9ms)  INSERT INTO "blogs" ("title", "created_at", "updated_at") VALUES (?, ?, ?)  [["title", "Nearby hotels"], ["created_at", "2023-01-11 18:14:13.253351"], ["updated_at", "2023-01-11 18:14:13.253351"]]
+  TRANSACTION (90.1ms)  commit transaction
+=> true
+irb(main):009:0> p
+
+irb(main):009:0> Blog.all
+  Blog Load (0.3ms)  SELECT "blogs".* FROM "blogs"
+=>
+[#<Blog:0x00000233c26658d0
+  id: 1,
+  title: "Health Blog",
+  created_at: Wed, 11 Jan 2023 17:52:26.361673000 UTC +00:00,  
+  updated_at: Wed, 11 Jan 2023 17:52:26.361673000 UTC +00:00>, 
+ #<Blog:0x00000233c2665790                                     
+  id: 2,                                                        
+  title: "Historical places",                                   
+  created_at: Wed, 11 Jan 2023 17:58:45.027127000 UTC +00:00,   
+  updated_at: Wed, 11 Jan 2023 17:58:45.027127000 UTC +00:00>,  
+ #<Blog:0x00000233c2665010                                      
+  id: 3,
+  title: "Nearby hotels",
+  created_at: Wed, 11 Jan 2023 18:14:13.253351000 UTC +00:00,
+  updated_at: Wed, 11 Jan 2023 18:14:13.253351000 UTC +00:00>]
+irb(main):010:0>
+#####################################################################################
+To Add some more missing columns in the same table:
+	generate new migration
+	Edit new migration file and add new columns
+	run db (rails db:migrate)
+	add values
+interpreter output:
+
+PS D:\YUBI\rails\userreg> rails generate migration blog_missingcontent
+      invoke  active_record
+      create    db/migrate/20230111184916_blog_missingcontent.rb
+PS D:\YUBI\rails\userreg> rails db:migrate
+== 20230111184916 BlogMissingcontent: migrating ===============================
+-- add_column(:blogs, :content, :string)
+   -> 0.0839s
+-- add_column(:blogs, :imagelink, :string)
+   -> 0.0101s
+== 20230111184916 BlogMissingcontent: migrated (0.0960s) ======================
+
+####################check if new columns added on interpreter##############################3
+PS D:\YUBI\rails\userreg> rails c
+Loading development environment (Rails 7.0.4)
+irb(main):001:0> B
+irb(main):001:0* Blog.
+irb(main):001:0> Blog.all
+  Blog Load (0.3ms)  SELECT "blogs".* FROM "blogs"
+=> 
+[#<Blog:0x0000021fd6f01548
+  id: 1,                                                        
+  title: "Health Blog",                                         
+  created_at: Wed, 11 Jan 2023 17:52:26.361673000 UTC +00:00,
+  updated_at: Wed, 11 Jan 2023 17:52:26.361673000 UTC +00:00,
+  content: nil,  
+  imagelink: nil>,
+ #<Blog:0x0000021fd6e0cbd8                                      
+  id: 2,                                                        
+  title: "Historical places",                                   
+  created_at: Wed, 11 Jan 2023 17:58:45.027127000 UTC +00:00,   
+  updated_at: Wed, 11 Jan 2023 17:58:45.027127000 UTC +00:00,
+  content: nil,
+  imagelink: nil>,
+ #<Blog:0x0000021fd6e0cb38
+  id: 3,
+  title: "Nearby hotels",
+  created_at: Wed, 11 Jan 2023 18:14:13.253351000 UTC +00:00,
+  updated_at: Wed, 11 Jan 2023 18:14:13.253351000 UTC +00:00,
+  content: nil,
+  imagelink: nil>]
+irb(main):002:0>
+##################################################################################3
+editing/updating:
+	find by id 
+	then update the coloumns
+interpreter output:
+
+ p=Blog.find(1)
+  Blog Load (395.7ms)  SELECT "blogs".* FROM "blogs" WHERE "blogs"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+=>
+#<Blog:0x0000021fd6e0f478
+...
+irb(main):003:0> p
+
+irb(main):003:0> p.content
+=> nil
+irb(main):004:0> p
+
+irb(main):004:0> p.content = "Health is very important,so have healthy meal"
+=> "Health is very important,so have healthy meal"
+irb(main):005:0> p
+
+irb(main):005:0> p.imagelink ="dummylink1"
+=> "dummylink1"
+irb(main):006:0> p
+
+irb(main):006:0> p.save
+  TRANSACTION (0.1ms)  begin transaction
+  Blog Update (371.8ms)  UPDATE "blogs" SET "updated_at" = ?, "content" = ?, "imagelink" = ? WHERE "blogs"."id" = ?  [["updated_at", "2023-01-11 19:03:53.907413"], ["content", "Health is very important,so have healthy meal"], ["imagelink", "dummylink1"], ["id", 1]]
+  TRANSACTION (650.7ms)  commit transaction
+=> true
+irb(main):007:0> B
+irb(main):007:0* Blog.
+irb(main):007:0> Blog.all
+  Blog Load (0.4ms)  SELECT "blogs".* FROM "blogs"
+=>
+[#<Blog:0x0000021fd36858e0
+  id: 1,
+  title: "Health Blog",
+  created_at: Wed, 11 Jan 2023 17:52:26.361673000 UTC +00:00,
+  updated_at: Wed, 11 Jan 2023 19:03:53.907413000 UTC +00:00,
+  content: "Health is very important,so have healthy meal",  
+  imagelink: "dummylink1">,                                     
+ #<Blog:0x0000021fd36857a0                                      
+  id: 2,                                                        
+  title: "Historical places",                                   
+  created_at: Wed, 11 Jan 2023 17:58:45.027127000 UTC +00:00,   
+  updated_at: Wed, 11 Jan 2023 17:58:45.027127000 UTC +00:00,
+  content: nil,
+  imagelink: nil>,
+ #<Blog:0x0000021fd3685660
+  id: 3,
+  title: "Nearby hotels",
+  created_at: Wed, 11 Jan 2023 18:14:13.253351000 UTC +00:00,
+  updated_at: Wed, 11 Jan 2023 18:14:13.253351000 UTC +00:00,
+  content: nil,
+  imagelink: nil>]
+irb(main):008:0>
+Note:similarly update next 2 rows
+#################################################################
+To search:
+	Blog.find(1) //find by id
+	Blog.where(title: "Health Blog")
+interpreter output:
+irb(main):019:0> Blog.where(title: "Health Blog")
+  Blog Load (0.6ms)  SELECT "blogs".* FROM "blogs" WHERE "blogs"."title" = ?  [["title", "Health Blog"]]
+=>
+[#<Blog:0x0000021fd76c0798
+  id: 1,
+  title: "Health Blog",
+  created_at: Wed, 11 Jan 2023 17:52:26.361673000 UTC +00:00,
+  updated_at: Wed, 11 Jan 2023 19:03:53.907413000 UTC +00:00,
+  content: "Health is very important,so have healthy meal",
+  imagelink: "dummylink1">]
+irb(main):020:0>
+
+#####################################################################
+
+Deleting records:
+	find row by id and destroy
+	p=Blog.find(3) //find 3rd id
+        p.destroy
+
+interpreter output:	
+irb(main):031:0> p=Blog.find(3)
+  Blog Load (0.6ms)  SELECT "blogs".* FROM "blogs" WHERE "blogs"."id" = ? LIMIT ?  [["id", 3], ["LIMIT", 1]]
+=>
+#<Blog:0x0000021fd76c7f98
+...
+irb(main):032:0> p.destroy
+  TRANSACTION (0.1ms)  begin transaction
+  Blog Destroy (3.5ms)  DELETE FROM "blogs" WHERE "blogs"."id" = ?  [["id", 3]]
+  TRANSACTION (122.5ms)  commit transaction
+=>
+#<Blog:0x0000021fd76c7f98
+ id: 3,
+ title: "Nearby hotels",
+ created_at: Wed, 11 Jan 2023 18:14:13.253351000 UTC +00:00,
+ updated_at: Wed, 11 Jan 2023 19:11:28.614589000 UTC +00:00,
+ content: "Priyadarshini",
+ imagelink: "dummylink3toHotelPriyadarshini">
+irb(main):033:0> Blog.all
+  Blog Load (0.3ms)  SELECT "blogs".* FROM "blogs"
+=>
+[#<Blog:0x0000021fd76cc318
+  id: 1,
+  title: "Health Blog",
+  created_at: Wed, 11 Jan 2023 17:52:26.361673000 UTC +00:00,
+  updated_at: Wed, 11 Jan 2023 19:03:53.907413000 UTC +00:00,
+  content: "Health is very important,so have healthy meal",  
+  imagelink: "dummylink1">,
+ #<Blog:0x0000021fd76cc1d8                                      
+  id: 2,                                                        
+  title: "Historical places",                                   
+  created_at: Wed, 11 Jan 2023 17:58:45.027127000 UTC +00:00,   
+  updated_at: Wed, 11 Jan 2023 19:09:13.571839000 UTC +00:00,   
+  content: "Jaipur",                                            
+  imagelink: "dummylink2toJaipur">]
+irb(main):034:0>
+
+##########################################################################################
+Providing validation for table(here Blog is table):
+	add validtion statement in Blog.rb under models
+	reload! //to apply validations on ur output
+
+	Note:example,content of Blog.rb
+	validates :title,  presence: true, length: {minimum: 1,maximum: 80}
+    	validates :content,  presence: true, length: {minimum: 2,maximum: 5000}
+########################################################################################
+	rails s -p 3001 //running blog
+	http://127.0.0.1:3001/blog //type this to see output on browser
+
+Link with postman:
+	In controller file add show,create,destroy and update methods and add code fot the necessary action
+
+Get :  http://127.0.0.1:3001/blog
+	Lists all data till now
+
+POST:	http://127.0.0.1:3001/blog
+	Enterdata in json format
+check the response 
+
+	
+####################end########################################################################################
